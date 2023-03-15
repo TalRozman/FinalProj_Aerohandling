@@ -52,10 +52,11 @@ def getFlights():
     driver.get(airportiaUrlDept)
     #seelct Date
     date = driver.find_element(by=By.ID,value='airport_departures_date_range_date')
+    date.click()
     mydate = date.find_element(by=By.TAG_NAME,value='option')
     mydate.click()
     #Select from time
-    fTime = driver.find_element(by=By.ID,value='airport_arrivals_date_range_from_time')
+    fTime = driver.find_element(by=By.ID,value='airport_departures_date_range_from_time')
     myfTime = fTime.find_element(by=By.TAG_NAME,value='option')
     myfTime.click()
     #Select to Time

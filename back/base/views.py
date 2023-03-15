@@ -12,6 +12,11 @@ from .serializers import GetProfileSerializer, MyTokenObtainPairSerializer,UserS
 from .scraper import getFlights
 import time
 
+from skimage.transform import resize
+import matplotlib.pyplot as plt
+from PIL import Image as im
+# import numpy as np
+
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
@@ -114,9 +119,9 @@ def editPic(request,user):
     pro = Profile.objects.get(user = user)
     if os.path.isfile(pro.image.path) and pro.image != "holder.jpeg":
          os.remove(pro.image.path)
-    pro.image = request.FILES['picture']
+    reqImage = request.FILES['picture']
+    pro.image = reqImage
     pro.save()
-
     return Response(status=status.HTTP_202_ACCEPTED)        
 
 
