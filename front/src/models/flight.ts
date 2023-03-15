@@ -1,0 +1,24 @@
+export interface Iflight{
+    id:number
+    flightNum:string
+    type:string
+    stdLocal:string
+    etdLocal:string
+    dest:string
+    aircraftType:string
+    aircraftReg:string
+    gate:string
+    pit:string
+    agents?:string[]
+    ramp?:string[]
+    wingWalker?:string[]
+    ambulift:boolean
+    obTime:string
+    delaycode:number[]
+    delaytime:string[]
+    arivalAgent:number
+    clc:number
+    pushback:number
+    sorter:number
+    spv:number
+}
