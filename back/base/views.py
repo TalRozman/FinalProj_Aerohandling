@@ -4,18 +4,13 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework.permissions import IsAuthenticated,IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Profile,Flights,CustomUser,Roles,Departments,EmploeeType
 from .serializers import GetProfileSerializer, MyTokenObtainPairSerializer,UserSerializer,ProfileSerializer,FlightSerializer,GetUserSelrializer
 
 from .scraper import getFlights
 import time
-
-from skimage.transform import resize
-import matplotlib.pyplot as plt
-from PIL import Image as im
-# import numpy as np
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
@@ -143,7 +138,7 @@ def GetFlights(req):
         f.save()
     return Response(status=status.HTTP_200_OK)
 
-if (time.time() - 1672524000) % 86400 == 0:
+if (time.time() - 1672606800) % 86400 == 0:
     GetFlights()
 
 @permission_classes([IsAuthenticated])
