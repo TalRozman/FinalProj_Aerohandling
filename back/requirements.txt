@@ -31,3 +31,4 @@ tzdata==2022.7
 urllib3==1.26.15
 wsproto==1.2.0
 gunicorn==20.1.0
+psycopg2==2.7.1
