@@ -35,7 +35,8 @@ function App() {
     if (localStorage.getItem("refreshToken") !== null) {
       dispatch(rememberAsync(String(localStorage.getItem("refreshToken"))))
     }
-  }, [dispatch])
+    // eslint-disable-next-line
+  }, [])
 
   const handleTimeout = () => {
     if (timeoutAck) {

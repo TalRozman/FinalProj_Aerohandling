@@ -54,7 +54,7 @@ export const ProfilePicAsync = createAsyncThunk(
 );
 export const delProfilePicAsync = createAsyncThunk(
   'profile/delprofileImages',
-  async (obj: { id: number, accessToken: string }) => {
+  async (obj: { id: number,imgUrl:string, accessToken: string }) => {
     const response = await delprofileImages(obj);
     return response;
   }

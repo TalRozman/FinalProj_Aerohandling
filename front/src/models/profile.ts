@@ -4,7 +4,7 @@ export default interface IProfile {
     birthDate: String,
     user:number,
     needTaxi: boolean,
-    image?: File|undefined,
+    image?: string,
     role?:number,
     department?:number,
     type?:number,
