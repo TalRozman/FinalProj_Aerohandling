@@ -76,10 +76,8 @@ export const loginSlice = createSlice(
       builder
         .addCase(loginAsync.fulfilled, (state, action) => {
           state.accessToken = action.payload?.access
-          state.refreshToken = action.payload?.refresh
           state.logged = true;
           sessionStorage.setItem('token', state.accessToken)
-          sessionStorage.setItem('tmpToken', state.refreshToken)
         })
         .addCase(loginAsync.rejected, (state, action) => {
           state.error = "Please try again";
@@ -90,13 +88,10 @@ export const loginSlice = createSlice(
           state.logged = true;
           sessionStorage.setItem('token', state.accessToken)
           sessionStorage.setItem('tmpToken', state.refreshToken)
+          localStorage.setItem('refreshToken', state.refreshToken)
         })
         .addCase(changeUsrPwdAsync.fulfilled, (state, action) => {
-          state.accessToken = action.payload?.access
-          state.refreshToken = action.payload?.refresh
-          state.logged = true;
-          sessionStorage.setItem('token', state.accessToken)
-          sessionStorage.setItem('tmpToken', state.refreshToken)
+          console.log("user changed password")
         })
     },
   });

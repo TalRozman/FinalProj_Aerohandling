@@ -15,6 +15,7 @@ const DailyFlights = () => {
   const [newFlts, setnewFlts] = useState([...flights])
   const [moveDate, setmoveDate] = useState(false)
   const [loaded, setloaded] = useState(false)
+  const [update, setupdate] = useState(false)
 
   if (accessToken !== String(null)) {
     tokenDecode = jwtDecode<any>(accessToken);
@@ -65,7 +66,7 @@ const DailyFlights = () => {
     <div style={{ textAlign: 'center' }}>
       {!loaded ?
         <>
-        <img src='https://joyustrips.com/assets/images/FlightLoader.gif' width={'100%'} height={'100%'} style={{position:'absolute',top:'0px',right:'0px',bottom:'0px',left:'0px'}}/>
+          <img src='https://joyustrips.com/assets/images/FlightLoader.gif' width={'100%'} height={'100%'} style={{ position: 'absolute', top: '0px', right: '0px', bottom: '0px', left: '0px' }} alt="loaderGIF" />
         </> :
         <>
           {tokenDecode?.type === "Manager" && <button className='btn btn-warning  ' onClick={() => dispatch(pullFlightsAsync())}>PULL FLIGHTS</button>}<br />
@@ -79,10 +80,12 @@ const DailyFlights = () => {
             <button className='btn' onClick={() => addDay()}> + </button>
           </div>
           <div className="table-responsive">
+            {/* SHOW ALL FLIGHTS */}
             {displayType === 'all' &&
               <table className='table table-striped table-hover' style={{ verticalAlign: 'middle', textAlign: 'center' }}>
                 <thead>
                   <tr>
+                    <th scope='col'>Actions</th>
                     <th scope="col">Type</th>
                     <th scope="col">Number</th>
                     <th scope="col">Schedual time</th>
@@ -101,19 +104,34 @@ const DailyFlights = () => {
                 <tbody>
                   {newFlts.filter((f: any) => f.stdLocal.slice(0, 10) === today).map((f: any, i: number) =>
                     <tr key={i}>
+                      <td>{update ? <button className='btn btn-danger' onClick={()=>setupdate(false)}>Cancel</button>:<button className='btn btn-warning' onClick={() => setupdate(true)}>Update</button>}</td>
                       <td>{f.type}</td>
                       <td>{f.flightNum}</td>
                       <td>{f.stdLocal.slice(11, 16)}&nbsp;&nbsp; Z<br />{new Date(f.stdLocal).toTimeString().slice(0, 5)}&nbsp; LT</td>
                       <td>{f.dest}</td>
-                      <td>{f.aircraftType === "TBA" ? "" : f.aircraftReg}</td>
-                      <td>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
-                      <td>{f.spv}</td>
-                      <td>{f.ambulift}</td>
-                      <td>{f.ramp}</td>
-                      <td>{f.gate === "TBA" ? "" : f.gate}</td>
-                      <td>{f.stand}</td>
-                      <td>{f.obTime}</td>
-                      <td>{f.delaycode}<br />{f.delaytime}</td>
+                      {update ?
+                        <>
+                          <td><input defaultValue={f.aircraftType === "TBA" ? "" : f.aircraftReg}/></td>
+                          <td>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
+                          <td>{f.spv}</td>
+                          <td>{f.ambulift}</td>
+                          <td>{f.ramp}</td>
+                          <td>{f.gate === "TBA" ? "" : f.gate}</td>
+                          <td>{f.stand}</td>
+                          <td>{f.obTime}</td>
+                          <td>{f.delaycode}<br />{f.delaytime}</td>
+                        </> :
+                        <>
+                          <td>{f.aircraftType === "TBA" ? "" : f.aircraftReg}</td>
+                          <td>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
+                          <td>{f.spv}</td>
+                          <td>{f.ambulift}</td>
+                          <td>{f.ramp}</td>
+                          <td>{f.gate === "TBA" ? "" : f.gate}</td>
+                          <td>{f.stand}</td>
+                          <td>{f.obTime}</td>
+                          <td>{f.delaycode}<br />{f.delaytime}</td>
+                        </>}
                     </tr>)}
                 </tbody>
               </table>}
@@ -181,7 +199,7 @@ const DailyFlights = () => {
               </table>}
           </div>
         </>
-        } 
+      }
     </div>
   )
 }

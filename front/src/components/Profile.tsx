@@ -6,7 +6,7 @@ import IProfile from '../models/profile'
 import { CheckLogged, logout, selectlogged } from '../features/Login/loginSlice'
 import { addProfileAsync, delProfileAsync, delProfilePicAsync, getProfileAsync, ProfilePicAsync, selectProfile, selectProfileRefresh, updProfileAsync } from '../features/Profile/profileSlice'
 import { toast, ToastContainer } from 'react-toastify'
-import { modalStyle, MY_SERVER } from '../env'
+import { modalStyle } from '../env'
 import { Modal, Box, Button } from '@mui/material'
 import { CloseOutlined } from '@mui/icons-material';
 
@@ -73,7 +73,8 @@ const Profile = () => {
     }
 
     const handleDelPic = () => {
-        dispatch(delProfilePicAsync(myobj))
+        const Myobj = { "id": +tokenDecode!.user_id, "accessToken": accessToken, "imgUrl": String(profile[0].image) }
+        dispatch(delProfilePicAsync(Myobj))
         setimgModal(false)
     }
 
@@ -83,7 +84,13 @@ const Profile = () => {
             dispatch(getProfileAsync(myobj));
         }
         // eslint-disable-next-line
-    }, [refresh, dispatch])
+    }, [refresh])
+
+    useEffect(() => {
+        dispatch(getProfileAsync(myobj));
+    // eslint-disable-next-line
+    }, [])
+
 
     return (
         <div style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '40%', textAlign: 'center' }}>
@@ -99,11 +106,11 @@ const Profile = () => {
                         <p>My role - {tokenDecode.role}</p>
                         <p>I am - {tokenDecode.type}</p>
                         <p>Taxi required? - {profile[0]?.needTaxi ? "Yes" : "No"}</p>
-                        <p onClick={() => setimgModal(true)}>My profile picture -<br />(please click to edit)<br /> <img src={MY_SERVER + profile[0]?.image} style={{ width: "100px", height: "100px" }} alt="My profile" /></p>
+                        <p onClick={() => setimgModal(true)}>My profile picture -<br />(please click to edit)<br /> <img src={profile[0].image} style={{ width: "100px", height: "100px" }} alt="My profile" /></p>
                         <button className='btn btn-warning' onClick={() => setisUpdate(true)}>Update</button><button className='btn btn-danger' onClick={() => handleDelete()}>Delete User</button>
                     </div> :
                     <form onSubmit={(e) => { handleEdit(); e.preventDefault() }}>
-                        <h1>Please Update your information</h1><br/><br/>
+                        <h1>Please Update your information</h1><br /><br />
                         <label>
                             Phone Number: {" "}
                             <input type={'text'} onChange={(e) => setphoneNum(e.currentTarget.value)} required />
@@ -116,7 +123,7 @@ const Profile = () => {
                             Need Taxi?: {" "}
                             <input type={'checkbox'} onChange={(e) => setneedTaxi(e.currentTarget.checked)} defaultValue={String(profile[0]?.needTaxi)} />
                         </label><br /><br />
-                        <button className='btn btn-success' type={'submit'}>Submit</button><button className='btn btn-danger' onClick={()=>setisUpdate(false)}>Cancel</button>
+                        <button className='btn btn-success' type={'submit'}>Submit</button><button className='btn btn-danger' onClick={() => setisUpdate(false)}>Cancel</button>
                         <br />
                     </form>
                 )

@@ -75,9 +75,6 @@ def getAllProfiles(req):
         usr_serializer = GetUserSelrializer(my_users,many = True).data
         prfl_serializer = GetProfileSerializer(my_prfl,many=True).data
         res = {"Users":usr_serializer,"Profiles":prfl_serializer}
-        def createJson():
-            # need to write recurtion function that creates proper JSON
-            pass
         return Response(res)
     except Profile.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
@@ -94,7 +91,6 @@ class MyProfileView(APIView):
     
     def post(self,request):
         serializer = ProfileSerializer(data=request.data)
-        print(request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -112,9 +108,7 @@ class MyProfileView(APIView):
 @api_view(["PATCH"])
 def editPic(request,user):
     pro = Profile.objects.get(user = user)
-    if os.path.isfile(pro.image.path) and pro.image != "holder.jpeg":
-         os.remove(pro.image.path)
-    reqImage = request.FILES['picture']
+    reqImage = request.data['picture']
     pro.image = reqImage
     pro.save()
     return Response(status=status.HTTP_202_ACCEPTED)        
@@ -124,9 +118,8 @@ def editPic(request,user):
 @api_view(["PATCH"])
 def delPic(request,user):
     pro = Profile.objects.get(user = user)
-    if os.path.isfile(pro.image.path) and pro.image != "holder.jpeg":
-        os.remove(pro.image.path)
-    pro.image = "holder.jpeg"
+    if pro.image != "https://firebasestorage.googleapis.com/v0/b/myfirstproject-38539.appspot.com/o/media%2Fholder.jpeg?alt=media&token=0f691153-a358-4ba4-84e6-2de128532ab9":
+        pro.image = "https://firebasestorage.googleapis.com/v0/b/myfirstproject-38539.appspot.com/o/media%2Fholder.jpeg?alt=media&token=0f691153-a358-4ba4-84e6-2de128532ab9"
     pro.save()
     return Response(status=status.HTTP_202_ACCEPTED)
 

@@ -37,7 +37,7 @@ class Profile(models.Model):
     address = models.CharField(max_length=500)
     birthDate = models.DateField(null=True)
     needTaxi = models.BooleanField(default=False)
-    image = models.ImageField(null=True, blank=True, default="holder.jpeg")
+    image = models.CharField(max_length=10000,null=True, blank=True, default="https://firebasestorage.googleapis.com/v0/b/myfirstproject-38539.appspot.com/o/media%2Fholder.jpeg?alt=media&token=0f691153-a358-4ba4-84e6-2de128532ab9")
 
     def __str__(self):
         return self.user.first_name
