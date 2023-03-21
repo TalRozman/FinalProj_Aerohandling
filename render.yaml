@@ -24,10 +24,3 @@ services:
       - "8000:8000"
     depends_on:
       - selenium
-    networks:
-      - backend
-
-networks:
-  backend:
-volumes:
-  db_data:
