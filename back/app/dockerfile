@@ -1,0 +1,15 @@
+FROM python
+
+# RUN sudo apt update && sudo apt upgrade -y && sudo apt update
+# RUN sudo apt install python3-pip -y
+
+COPY . /myapp
+
+WORKDIR /myapp/app
+
+RUN pip3 install -r requirements.txt
+
+EXPOSE 8000
+
+ENTRYPOINT ["python3"] 
+CMD ["manage.py", "runserver","0.0.0.0:8000"]

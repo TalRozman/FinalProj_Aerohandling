@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = bool("true")
 
 ALLOWED_HOSTS = ['*']
 
@@ -64,8 +64,10 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
- 
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+        'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
     )
 }
 
@@ -135,6 +137,17 @@ DATABASES = {
     'PORT': '5432',
   }
 }
+
+# DATABASES = {
+#   'default': {
+#     'ENGINE': 'django.db.backends.postgresql',
+#     'NAME': 'aerohandling',
+#     'USER': 'postgres',
+#     'PASSWORD': '1234',
+#     'HOST': 'host.docker.internal',
+#     'PORT':'5432',
+#   }
+# }
 
 
 # Password validation

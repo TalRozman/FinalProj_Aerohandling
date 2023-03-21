@@ -1,8 +1,9 @@
 from datetime import datetime
-import json
+import selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from bs4 import BeautifulSoup
 
 
@@ -17,8 +18,10 @@ airportiaUrlDept = 'https://www.airportia.com/israel/ben-gurion-international-ai
 def getFlights():
     # create a new Edge session
     options = Options()
-    options.add_experimental_option("detach", True)
-    driver = webdriver.Edge(options=options)
+    options = webdriver.ChromeOptions()
+    options.add_argument('--ignore-ssl-errors=yes')
+    options.add_argument('--ignore-certificate-errors')
+    driver = webdriver.Remote(command_executor='http://selenium:4444/wd/hub',options=options,desired_capabilities=DesiredCapabilities.CHROME)
     # driver.minimize_window()
     # Open Airportia Arivals website
     driver.get(airportiaUrlArvl)
@@ -73,7 +76,7 @@ def getFlights():
     searchBtn.click()
     departures = driver.page_source
 
-    driver.close()
+    driver.quit()
 
     aeroCompanies = ["UX","IB","AI","IZ","B2","WZ","QS","EY","5F","3F","J2","HY","CY","A9","ET","FB","VY"]
     flights = {"flights":[]}
