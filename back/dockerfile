@@ -5,7 +5,7 @@ FROM python
 
 COPY . /myapp
 
-WORKDIR /myapp/app
+WORKDIR /myapp/back
 
 RUN pip3 install -r requirements.txt
 
