@@ -1,8 +1,8 @@
 FROM selenium/standalone-chrome:110.0-chromedriver-110.0
 
 USER root
-RUN sudo apt update
-RUN sudo apt install xfce4 xfce4-goodies
-RUN sudo apt install tightvncserver
+RUN sudo apt update && sudo apt upgrade
+RUN sudo apt install xfce4 xfce4-goodies -y
+RUN sudo apt install tightvncserver -y
 
 EXPOSE 4444
