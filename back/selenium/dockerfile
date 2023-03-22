@@ -1,3 +1,5 @@
 FROM selenium/standalone-chrome:110.0-chromedriver-110.0
 
 EXPOSE 4444
+
+CMD [ "java -Dwebdriver.chrome.driver=/usr/bin/chromedriver -jar /opt/selenium/selenium-server.jar standalone --port 4444 & sleep 5" ]
