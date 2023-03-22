@@ -1,0 +1,28 @@
+services:
+  selenium:
+    container_name: selenium
+    image: selenium/standalone-chrome:110.0-chromedriver-110.0
+    restart: always
+    ports:
+      - "4444:4444"
+    networks:
+      - backend
+    environment:
+      - VNC_NO_PASSWORD = 1
+
+  web:
+    container_name: django
+    build:
+      context: .
+      dockerfile: talrozman/aerohandling:latest
+    volumes:
+      - .:/app/
+    ports:
+      - "8000:8000"
+    depends_on:
+      - selenium
+    networks:
+      - backend
+
+networks:
+  backend:
