@@ -10,4 +10,4 @@ EXPOSE 4444
 
 RUN chmod +x entrypoint.sh
 
-ENTRYPOINT ["/sel/entrypoint.sh"]
+# ENTRYPOINT ["/sel/entrypoint.sh"]
