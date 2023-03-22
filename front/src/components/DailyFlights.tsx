@@ -104,24 +104,23 @@ const DailyFlights = () => {
                 <tbody>
                   {newFlts.filter((f: any) => f.stdLocal.slice(0, 10) === today).map((f: any, i: number) =>
                     <tr key={i}>
-                      <td>{update ? <button className='btn btn-danger' onClick={()=>setupdate(false)}>Cancel</button>:<button className='btn btn-warning' onClick={() => setupdate(true)}>Update</button>}</td>
+                      <td>{update ? <button className='btn btn-danger' onClick={() => setupdate(false)}>Cancel</button> : <button className='btn btn-warning' onClick={() => setupdate(true)}>Update</button>}</td>
                       <td>{f.type}</td>
                       <td>{f.flightNum}</td>
                       <td>{f.stdLocal.slice(11, 16)}&nbsp;&nbsp; Z<br />{new Date(f.stdLocal).toTimeString().slice(0, 5)}&nbsp; LT</td>
                       <td>{f.dest}</td>
-                      {update ?
+                      {tokenDecode?.type === "Manager" || tokenDecode?.type === "Shift Supervisor" ?
                         <>
-                          <td><input defaultValue={f.aircraftType === "TBA" ? "" : f.aircraftReg}/></td>
-                          <td>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
-                          <td>{f.spv}</td>
-                          <td>{f.ambulift}</td>
-                          <td>{f.ramp}</td>
-                          <td>{f.gate === "TBA" ? "" : f.gate}</td>
-                          <td>{f.stand}</td>
-                          <td>{f.obTime}</td>
-                          <td>{f.delaycode}<br />{f.delaytime}</td>
-                        </> :
-                        <>
+                          <td contentEditable>{f.aircraftType === "TBA" ? "" : f.aircraftReg}</td>
+                          <td contentEditable>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
+                          <td contentEditable>{f.spv}</td>
+                          <td contentEditable>{f.ambulift}</td>
+                          <td contentEditable>{f.ramp}</td>
+                          <td contentEditable>{f.gate === "TBA" ? "" : f.gate}</td>
+                          <td contentEditable>{f.stand}</td>
+                          <td contentEditable>{f.obTime}</td>
+                          <td contentEditable>{f.delaycode}<br />{f.delaytime}</td>
+                        </> : <>
                           <td>{f.aircraftType === "TBA" ? "" : f.aircraftReg}</td>
                           <td>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
                           <td>{f.spv}</td>
@@ -135,6 +134,7 @@ const DailyFlights = () => {
                     </tr>)}
                 </tbody>
               </table>}
+            {/* DISPLAY ARRIVALS ONLY */}
             {displayType === 'arrivals' &&
               <table className='table table-striped table-hover' style={{ verticalAlign: 'middle', textAlign: 'center' }}>
                 <thead>
@@ -151,20 +151,30 @@ const DailyFlights = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {newFlts.filter((f: any) => f.stdLocal.slice(0, 10) === today).map((f: any, i: number) =>
+                  {newFlts.filter((f: any) => f.stdLocal.slice(0, 10) === today).filter((f: any) => f.type === 'A').map((f: any, i: number) =>
                     <tr key={i}>
                       <td>{f.type}</td>
                       <td>{f.flightNum}</td>
                       <td>{f.stdLocal.slice(11, 16)}&nbsp;&nbsp; Z<br />{new Date(f.stdLocal).toTimeString().slice(0, 5)}&nbsp; LT</td>
                       <td>{f.dest}</td>
-                      <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
-                      <td>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
-                      <td>{f.ambulift === null ? "" : f.ambulift ? "YES" : "NO"}</td>
-                      <td>{f.ramp}</td>
-                      <td>{f.stand}</td>
+                      {tokenDecode?.type === "Manager" || tokenDecode?.type === "Shift Supervisor" ?
+                        <>
+                          <td contentEditable>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                          <td contentEditable>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
+                          <td contentEditable>{f.ambulift === null ? "" : f.ambulift ? "YES" : "NO"}</td>
+                          <td contentEditable>{f.ramp}</td>
+                          <td contentEditable>{f.stand}</td>
+                        </> : <>
+                          <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                          <td>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
+                          <td>{f.ambulift === null ? "" : f.ambulift ? "YES" : "NO"}</td>
+                          <td>{f.ramp}</td>
+                          <td>{f.stand}</td>
+                        </>}
                     </tr>)}
                 </tbody>
               </table>}
+            {/* DISPLAY DEPARTURES ONLY */}
             {displayType === 'departures' &&
               <table className='table table-striped table-hover' style={{ verticalAlign: 'middle', textAlign: 'center' }}>
                 <thead>
@@ -182,18 +192,29 @@ const DailyFlights = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {newFlts.filter((f: any) => f.stdLocal.slice(0, 10) === today).map((f: any, i: number) =>
+                  {newFlts.filter((f: any) => f.stdLocal.slice(0, 10) === today).filter((f: any) => f.type === 'D').map((f: any, i: number) =>
                     <tr key={i}>
                       <td>{f.type}</td>
                       <td>{f.flightNum}</td>
                       <td>{f.stdLocal.slice(11, 16)}&nbsp;&nbsp; Z<br />{new Date(f.stdLocal).toTimeString().slice(0, 5)}&nbsp; LT</td>
                       <td>{f.dest}</td>
-                      <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
-                      <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
-                      <td>{f.spv}</td>
-                      <td>{f.ramp}</td>
-                      <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
-                      <td>{f.actualTime}</td>
+                      {tokenDecode?.type === "Manager" || tokenDecode?.type === "Shift Supervisor" ?
+                        <>
+                          <td contentEditable>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                          <td contentEditable>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                          <td contentEditable>{f.spv}</td>
+                          <td contentEditable>{f.ramp}</td>
+                          <td contentEditable>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                          <td contentEditable>{f.actualTime}</td>
+                        </> :
+                        <>
+                          <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                          <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                          <td>{f.spv}</td>
+                          <td>{f.ramp}</td>
+                          <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                          <td>{f.actualTime}</td>
+                        </>}
                     </tr>)}
                 </tbody>
               </table>}

@@ -3,23 +3,23 @@ import { RootState } from '../../app/store';
 import IProfile from '../../models/profile';
 import { logout } from '../Login/loginSlice';
 import { addProfile, delProfile, delprofileImages, getAllProfile, getProfile, profileImages, updProfile } from './profileAPI';
-
+import Resizer from "react-image-file-resizer";
 
 export interface profileState {
-  profiles:IProfile[]
-  allProfiles?:any
-  refresh:boolean
-  status?:Boolean
+  profiles: IProfile[]
+  allProfiles?: any
+  refresh: boolean
+  status?: Boolean
 }
 
 const initialState: profileState = {
-  profiles:[],
-  refresh:false
+  profiles: [],
+  refresh: false
 };
 
 export const getProfileAsync = createAsyncThunk(
   'profile/getProfile',
-  async (obj: { id:number, accessToken: string }) => {
+  async (obj: { id: number, accessToken: string }) => {
     const response = await getProfile(obj);
     return response;
   }
@@ -45,24 +45,35 @@ export const delProfileAsync = createAsyncThunk(
     return response;
   }
 );
+const resizeFile = (file: File) =>
+  new Promise((resolve) => {
+    Resizer.imageFileResizer(file, 300, 300, "JPEG", 100, 0,
+      (uri) => {
+        resolve(uri);
+      },
+      "base64"
+    );
+  });
+
 export const ProfilePicAsync = createAsyncThunk(
   'profile/profileImages',
-  async (obj: { id: number,pic:File, accessToken: string }) => {
-    const response = await profileImages(obj);
+  async (obj: { id: number, pic: File, accessToken: string }) => {
+    let response: any;
+    await resizeFile(obj.pic).then(async () => response = await profileImages(obj))
     return response;
   }
 );
 export const delProfilePicAsync = createAsyncThunk(
   'profile/delprofileImages',
-  async (obj: { id: number,imgUrl:string, accessToken: string }) => {
+  async (obj: { id: number, imgUrl: string, accessToken: string }) => {
     const response = await delprofileImages(obj);
     return response;
   }
 );
-export const getAllProfileAsync=createAsyncThunk(
+export const getAllProfileAsync = createAsyncThunk(
   "profile/getAllProfile",
-  async (accessToken:string)=>{
-    const response:any = await getAllProfile(accessToken);
+  async (accessToken: string) => {
+    const response: any = await getAllProfile(accessToken);
     return response;
   }
 )
@@ -71,8 +82,7 @@ export const profileSlice = createSlice({
   name: 'profile',
   initialState,
   reducers: {
-    resetProfile:(state)=>
-    {
+    resetProfile: (state) => {
       state.profiles = [];
     }
   },

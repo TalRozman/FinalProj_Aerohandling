@@ -91,7 +91,7 @@ const Profile = () => {
     // eslint-disable-next-line
     }, [])
 
-
+    
     return (
         <div style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '40%', textAlign: 'center' }}>
             <ToastContainer />

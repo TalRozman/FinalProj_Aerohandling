@@ -1,8 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
-// export const MY_SERVER = "https://finalproj-aerohandling.onrender.com/"
-export const MY_SERVER = "http://127.0.0.1:8000/"
+export const MY_SERVER = "https://aerohandling.onrender.com/"
 
 export const modalStyle = {
     position: 'absolute' as 'absolute',
