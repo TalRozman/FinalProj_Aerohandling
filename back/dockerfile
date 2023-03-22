@@ -1,7 +1,10 @@
-FROM python
+# FROM python
+FROM selenium/standalone-chrome:110.0-chromedriver-110.0
 
-# RUN sudo apt update && sudo apt upgrade -y && sudo apt update
-# RUN sudo apt install python3-pip -y
+USER root
+
+RUN sudo apt update && sudo apt upgrade -y
+RUN sudo apt install python3-pip -y
 
 COPY . /myapp
 
@@ -9,7 +12,11 @@ WORKDIR /myapp
 
 RUN pip3 install -r requirements.txt
 
+EXPOSE 4444
 EXPOSE 8000
 
-ENTRYPOINT ["python3"] 
-CMD ["manage.py", "runserver","0.0.0.0:8000"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
