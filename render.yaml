@@ -1,7 +1,0 @@
-services:
-  - type: web
-    name: django
-    env: docker
-    repo: https://github.com/TalRozman/FinalProj_Aerohandling.git
-    # rootDir: backend/
-    dockerCommand: docker-compose up
