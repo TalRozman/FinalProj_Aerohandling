@@ -95,12 +95,14 @@ const RegisterModal = () => {
                                             <option value={4}>Ramp</option>
                                             <option value={5}>OPS</option>
                                             <option value={6}>Load Control</option>
+                                            <option value={7}>Pushback</option>
+                                            <option value={8}>Sorter</option>
                                         </> :
                                         <option value={""}>Please choose Department</option>}
                             </select>
                         </label><br /><br />
                         <label>
-                            Is manager?<br/>
+                            Is manager?<br />
                             <input type={'checkbox'} onChange={(e) => setisManager(e.currentTarget.checked)} />
                         </label><br /><br />
                         <input type={'submit'} className='btn btn-success' /> <input type="reset" className='btn btn-danger' />

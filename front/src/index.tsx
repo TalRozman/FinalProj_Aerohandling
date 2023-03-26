@@ -10,7 +10,7 @@ import DailyFlights from './components/DailyFlights';
 import ProfileManage from './components/ProfileManage';
 import E404 from './components/404';
 import Landing from './components/Landing';
-import MyDay from './components/MyDay';
+import SingleFlight from './components/SingleFlight';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -24,9 +24,10 @@ root.render(
           <Route path='resetPassword' element={<App />} />
           <Route path='profile' element={<Profile />} />
           <Route path='manageProfiles' element={<ProfileManage />} />
-          <Route path='dailyFlights' element={<DailyFlights />} />
-          <Route path='myDay' element={<MyDay />} />
-
+          <Route path='flights'>
+            <Route index element={<DailyFlights />}/>
+            <Route path=':flightId' element={<SingleFlight />} />
+          </Route>
         </Route>
         <Route path='*' element={<E404 />} />
       </Routes>

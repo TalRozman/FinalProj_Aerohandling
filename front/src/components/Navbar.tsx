@@ -29,8 +29,7 @@ const Navbar = () => {
                                 {/* data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show" */}
                                 <li className="nav-item"><Link className="nav-link active" aria-current="page" to={'/'}><span data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Home</span></Link></li>
                                 <li className="nav-item"><Link className="nav-link" to={'profile'}><span data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">My profile</span></Link></li>
-                                <li className="nav-item"><Link className="nav-link" to={'dailyFlights'}><span data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Daily Schedule</span></Link></li>
-                                <li className="nav-item"><Link className="nav-link" to={'myDay'}><span data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">My Day</span></Link></li>
+                                <li className="nav-item"><Link className="nav-link" to={'flights'}><span data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Daily Schedule</span></Link></li>
                                 {/* ONLY IF MANAGER */}
                                 {decodedToken?.type === "Manager" &&
                                     <li className="nav-item dropdown">

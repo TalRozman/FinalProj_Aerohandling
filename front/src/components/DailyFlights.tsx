@@ -1,8 +1,9 @@
 import jwtDecode from 'jwt-decode'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
-import { getFlightsAsync, pullFlightsAsync, selectFlights, selectFlightsRefresh } from '../features/DailySchedule/dailySlice'
-import { Iflight } from '../models/flight'
+import { getFlightsAsync, pullFlightsAsync, selectFlights, selectFlightsRefresh, setSingleFlightModal } from '../features/DailySchedule/dailySlice'
+import SingleFlight from './SingleFlight'
+import UpdateFlight from './UpdateFlight'
 
 const DailyFlights = () => {
   const dispatch = useAppDispatch()
@@ -16,6 +17,7 @@ const DailyFlights = () => {
   const [moveDate, setmoveDate] = useState(false)
   const [loaded, setloaded] = useState(false)
   const [update, setupdate] = useState(false)
+  const [fId, setfId] = useState<number>(0)
 
   if (accessToken !== String(null)) {
     tokenDecode = jwtDecode<any>(accessToken);
@@ -62,6 +64,11 @@ const DailyFlights = () => {
     setnewFlts([...flights])
   }, 3000);
 
+  const handleSelectedFlight = (id: number) => {
+    setfId(id)
+    dispatch(setSingleFlightModal())
+  }
+
   return (
     <div style={{ textAlign: 'center' }}>
       {!loaded ?
@@ -85,7 +92,8 @@ const DailyFlights = () => {
               <table className='table table-striped table-hover' style={{ verticalAlign: 'middle', textAlign: 'center' }}>
                 <thead>
                   <tr>
-                    <th scope='col'>Actions</th>
+                    {(tokenDecode?.type === "Manager" || tokenDecode?.type === "Shift Supervisor") &&
+                      <th scope='col'>Actions</th>}
                     <th scope="col">Type</th>
                     <th scope="col">Number</th>
                     <th scope="col">Schedual time</th>
@@ -103,34 +111,22 @@ const DailyFlights = () => {
                 </thead>
                 <tbody>
                   {newFlts.filter((f: any) => f.stdLocal.slice(0, 10) === today).map((f: any, i: number) =>
-                    <tr key={i}>
-                      <td>{update ? <button className='btn btn-danger' onClick={() => setupdate(false)}>Cancel</button> : <button className='btn btn-warning' onClick={() => setupdate(true)}>Update</button>}</td>
+                    <tr key={i} onClick={() => handleSelectedFlight(f.id)}>
+                      {(tokenDecode?.type === "Manager" || tokenDecode?.type === "Shift Supervisor") &&
+                        <td onClick={(e) => e.stopPropagation()}><button className='btn btn-warning' onClick={() => setupdate(true)}>Update</button></td>}
                       <td>{f.type}</td>
                       <td>{f.flightNum}</td>
                       <td>{f.stdLocal.slice(11, 16)}&nbsp;&nbsp; Z<br />{new Date(f.stdLocal).toTimeString().slice(0, 5)}&nbsp; LT</td>
                       <td>{f.dest}</td>
-                      {tokenDecode?.type === "Manager" || tokenDecode?.type === "Shift Supervisor" ?
-                        <>
-                          <td contentEditable>{f.aircraftType === "TBA" ? "" : f.aircraftReg}</td>
-                          <td contentEditable>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
-                          <td contentEditable>{f.spv}</td>
-                          <td contentEditable>{f.ambulift}</td>
-                          <td contentEditable>{f.ramp}</td>
-                          <td contentEditable>{f.gate === "TBA" ? "" : f.gate}</td>
-                          <td contentEditable>{f.stand}</td>
-                          <td contentEditable>{f.obTime}</td>
-                          <td contentEditable>{f.delaycode}<br />{f.delaytime}</td>
-                        </> : <>
-                          <td>{f.aircraftType === "TBA" ? "" : f.aircraftReg}</td>
-                          <td>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
-                          <td>{f.spv}</td>
-                          <td>{f.ambulift}</td>
-                          <td>{f.ramp}</td>
-                          <td>{f.gate === "TBA" ? "" : f.gate}</td>
-                          <td>{f.stand}</td>
-                          <td>{f.obTime}</td>
-                          <td>{f.delaycode}<br />{f.delaytime}</td>
-                        </>}
+                      <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                      <td>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
+                      <td>{f.spv}</td>
+                      <td>{f.ambulift}</td>
+                      <td>{f.ramp}</td>
+                      <td>{f.gate === "TBA" ? "" : f.gate}</td>
+                      <td>{f.stand}</td>
+                      <td>{f.obTime}</td>
+                      <td>{f.delaycode}<br />{f.delaytime}</td>
                     </tr>)}
                 </tbody>
               </table>}
@@ -152,25 +148,16 @@ const DailyFlights = () => {
                 </thead>
                 <tbody>
                   {newFlts.filter((f: any) => f.stdLocal.slice(0, 10) === today).filter((f: any) => f.type === 'A').map((f: any, i: number) =>
-                    <tr key={i}>
+                    <tr key={i} onClick={() => handleSelectedFlight(f.id)}>
                       <td>{f.type}</td>
                       <td>{f.flightNum}</td>
                       <td>{f.stdLocal.slice(11, 16)}&nbsp;&nbsp; Z<br />{new Date(f.stdLocal).toTimeString().slice(0, 5)}&nbsp; LT</td>
                       <td>{f.dest}</td>
-                      {tokenDecode?.type === "Manager" || tokenDecode?.type === "Shift Supervisor" ?
-                        <>
-                          <td contentEditable>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
-                          <td contentEditable>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
-                          <td contentEditable>{f.ambulift === null ? "" : f.ambulift ? "YES" : "NO"}</td>
-                          <td contentEditable>{f.ramp}</td>
-                          <td contentEditable>{f.stand}</td>
-                        </> : <>
-                          <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
-                          <td>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
-                          <td>{f.ambulift === null ? "" : f.ambulift ? "YES" : "NO"}</td>
-                          <td>{f.ramp}</td>
-                          <td>{f.stand}</td>
-                        </>}
+                      <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                      <td>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
+                      <td>{f.ambulift === null ? "" : f.ambulift ? "YES" : "NO"}</td>
+                      <td>{f.ramp}</td>
+                      <td>{f.stand}</td>
                     </tr>)}
                 </tbody>
               </table>}
@@ -186,6 +173,7 @@ const DailyFlights = () => {
                     <th scope="col">A/C type</th>
                     <th scope="col">A/C reg</th>
                     <th scope="col">SPV</th>
+                    <th scope="col">CLC</th>
                     <th scope="col">Ramp</th>
                     <th scope="col">Gate</th>
                     <th scope="col">Actual time</th>
@@ -193,35 +181,27 @@ const DailyFlights = () => {
                 </thead>
                 <tbody>
                   {newFlts.filter((f: any) => f.stdLocal.slice(0, 10) === today).filter((f: any) => f.type === 'D').map((f: any, i: number) =>
-                    <tr key={i}>
+                    <tr key={i} onClick={() => handleSelectedFlight(f.id)}>
                       <td>{f.type}</td>
                       <td>{f.flightNum}</td>
                       <td>{f.stdLocal.slice(11, 16)}&nbsp;&nbsp; Z<br />{new Date(f.stdLocal).toTimeString().slice(0, 5)}&nbsp; LT</td>
                       <td>{f.dest}</td>
-                      {tokenDecode?.type === "Manager" || tokenDecode?.type === "Shift Supervisor" ?
-                        <>
-                          <td contentEditable>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
-                          <td contentEditable>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
-                          <td contentEditable>{f.spv}</td>
-                          <td contentEditable>{f.ramp}</td>
-                          <td contentEditable>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
-                          <td contentEditable>{f.actualTime}</td>
-                        </> :
-                        <>
-                          <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
-                          <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
-                          <td>{f.spv}</td>
-                          <td>{f.ramp}</td>
-                          <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
-                          <td>{f.actualTime}</td>
-                        </>}
+                      <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                      <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                      <td>{f.spv}</td>
+                      <td>{f.clc}</td>
+                      <td>{f.ramp}</td>
+                      <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                      <td>{f.actualTime}</td>
                     </tr>)}
                 </tbody>
               </table>}
           </div>
         </>
       }
-    </div>
+      <SingleFlight flightId={fId} />
+      <UpdateFlight Fupdate={update} setUpdate={setupdate}/>
+    </div >
   )
 }
 

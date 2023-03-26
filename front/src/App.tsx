@@ -66,7 +66,9 @@ function App() {
       <LoginModal />
       <RegisterModal />
       <ChngPwd />
-      <Outlet />
+      <div className='content'>
+        <Outlet />
+      </div>
 
       <Modal open={timeoutModal}>
         <Box sx={modalStyle} >
