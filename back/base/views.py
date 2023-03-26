@@ -78,6 +78,13 @@ def getAllProfiles(req):
         return Response(res)
     except Profile.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    
+@permission_classes([IsAuthenticated])
+@api_view(["GET"])
+def getAllUsers(req):
+    users = CustomUser.objects.all()
+    usr_serializer = GetUserSelrializer(users,many = True).data
+    return Response(usr_serializer)
 
 @permission_classes([IsAuthenticated])
 class MyProfileView(APIView):
