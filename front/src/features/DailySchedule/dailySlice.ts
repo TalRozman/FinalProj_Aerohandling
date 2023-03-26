@@ -7,15 +7,15 @@ import { getAllFlights, getAllUsers, pullFlights } from './dailyAPI';
 export interface dailyState {
   flights: Iflight[]
   refresh:boolean
-  singleFlightModal:boolean
-  users: Iuser[]
+  users: any[]
+  loading: boolean
 }
 
 const initialState: dailyState = {
   flights:[],
   refresh: false,
-  singleFlightModal:false,
-  users: []
+  users: [],
+  loading:true,
 };
 
 export const getFlightsAsync = createAsyncThunk(
@@ -45,14 +45,12 @@ export const dailySlice = createSlice(
     name: 'daily',
     initialState,
     reducers: {
-      setSingleFlightModal:(state)=>{
-        state.singleFlightModal = ! state.singleFlightModal;
-      }
     },
     extraReducers: (builder) => {
       builder
         .addCase(getFlightsAsync.fulfilled, (state, action) => {
           state.flights = action.payload
+          state.loading = false
         })
         .addCase(pullFlightsAsync.fulfilled, (state) => {
           state.refresh = !state.refresh
@@ -63,11 +61,12 @@ export const dailySlice = createSlice(
     },
   });
 
-export const { setSingleFlightModal } = dailySlice.actions;
+// export const { } = dailySlice.actions;
 
 export const selectFlights = (state: RootState) => state.daily.flights;
 export const selectFlightsRefresh = (state: RootState) => state.daily.refresh;
-export const selectSingleFlightModal = (state: RootState) => state.daily.singleFlightModal;
 export const selectAllUsers = (state: RootState) => state.daily.users;
+export const selectFlightsPending = (state: RootState) => state.daily.loading;
+
 
 export default dailySlice.reducer;

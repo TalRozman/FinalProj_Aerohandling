@@ -51,6 +51,7 @@ export const loginSlice = createSlice(
       logout: (state) => {
         state.accessToken = "";
         sessionStorage.removeItem('token')
+        sessionStorage.removeItem('tmptoken')
         localStorage.removeItem('refreshToken')
         state.logged = false;
         resetProfile()

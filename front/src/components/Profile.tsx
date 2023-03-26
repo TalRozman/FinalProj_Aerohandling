@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import IProfile from '../models/profile'
-import { CheckLogged, logout, selectlogged } from '../features/Login/loginSlice'
-import { addProfileAsync, delProfileAsync, delProfilePicAsync, getProfileAsync, ProfilePicAsync, selectProfile, selectProfileRefresh, updProfileAsync } from '../features/Profile/profileSlice'
+import { CheckLogged, selectlogged } from '../features/Login/loginSlice'
+import { addProfileAsync, delProfilePicAsync, getProfileAsync, ProfilePicAsync, selectProfile, selectProfileRefresh, updProfileAsync } from '../features/Profile/profileSlice'
 import { toast, ToastContainer } from 'react-toastify'
 import { modalStyle } from '../env'
 import { Modal, Box, Button } from '@mui/material'
@@ -44,24 +44,6 @@ const Profile = () => {
         const obj = { pro, accessToken }
         dispatch(updProfileAsync(obj))
         setisUpdate(false)
-    }
-
-    const handleDelete = () => {
-        toast.success('User deleted successfully!', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: "colored",
-        });
-        setTimeout(() => {
-            navigate('/')
-            dispatch(delProfileAsync(myobj))
-            dispatch(logout())
-        }, 3000);
     }
 
     const handleImage = () => {
@@ -107,7 +89,7 @@ const Profile = () => {
                         <p>I am - {tokenDecode.type}</p>
                         <p>Taxi required? - {profile[0]?.needTaxi ? "Yes" : "No"}</p>
                         <p onClick={() => setimgModal(true)}>My profile picture -<br />(please click to edit)<br /> <img src={profile[0].image} style={{ width: "100px", height: "100px" }} alt="My profile" /></p>
-                        <button className='btn btn-warning' onClick={() => setisUpdate(true)}>Update</button><button className='btn btn-danger' onClick={() => handleDelete()}>Delete User</button>
+                        <button className='btn btn-warning' onClick={() => setisUpdate(true)}>Update</button>
                     </div> :
                     <form onSubmit={(e) => { handleEdit(); e.preventDefault() }}>
                         <h1>Please Update your information</h1><br /><br />

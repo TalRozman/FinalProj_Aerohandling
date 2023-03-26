@@ -88,14 +88,15 @@ const RegisterModal = () => {
                                         <option value={1}>Flight Supervisor</option>
                                         <option value={2}>Check in Agent</option>
                                         <option value={3}>PS</option>
+                                        <option value={9}>MAAS Agent</option>
                                     </> :
                                     department === 1 ?
                                         <>
                                             <option value={""}>Please choose</option>
-                                            <option value={4}>Ramp</option>
+                                            <option value={4}>Ramp Agent</option>
                                             <option value={5}>OPS</option>
                                             <option value={6}>Load Control</option>
-                                            <option value={7}>Pushback</option>
+                                            <option value={7}>Pushback Driver</option>
                                             <option value={8}>Sorter</option>
                                         </> :
                                         <option value={""}>Please choose Department</option>}
