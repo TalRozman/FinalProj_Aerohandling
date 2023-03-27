@@ -148,7 +148,7 @@ class MyFlightsView(APIView):
         serailizer = FlightSerializer(myModel,many=True)
         return Response(serailizer.data)      
 
-    def put(self, request, id):
+    def patch(self, request, id):
         my_model = Flights.objects.get(id=id)
         serializer = FlightSerializer(my_model, data=request.data)
         if serializer.is_valid():
