@@ -52,3 +52,8 @@ class FlightSerializer(serializers.ModelSerializer):
     class Meta:
         model = Flights
         fields = '__all__'
+
+class UpdateFlightSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Flights
+        fields = ('etdLocal','aircraftType','aircraftReg','gate','pit','agents','ramp','wingWalker','ambulift','obTime','delaycode','delaytime','spv','arivalAgent','clc','sorter','pushback')

@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Profile,Flights,CustomUser,Roles,Departments,EmploeeType
-from .serializers import GetProfileSerializer, MyTokenObtainPairSerializer,UserSerializer,ProfileSerializer,FlightSerializer,GetUserSelrializer
+from .serializers import GetProfileSerializer, MyTokenObtainPairSerializer,UserSerializer,ProfileSerializer,FlightSerializer,GetUserSelrializer,UpdateFlightSerializer
 
 from .scraper import getFlights
 import time
@@ -150,7 +150,7 @@ class MyFlightsView(APIView):
 
     def patch(self, request, id):
         my_model = Flights.objects.get(id=id)
-        serializer = FlightSerializer(my_model, data=request.data)
+        serializer = UpdateFlightSerializer(my_model, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
