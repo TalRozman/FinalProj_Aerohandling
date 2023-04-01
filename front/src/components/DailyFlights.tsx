@@ -8,6 +8,8 @@ import SingleFlight from './SingleFlight'
 const DailyFlights = () => {
   const dispatch = useAppDispatch()
   const flights = useAppSelector(selectFlights)
+  const loading = useAppSelector(selectFlightsPending)
+  const flightRefresh = useAppSelector(selectFlightsRefresh)
   const accessToken = String(sessionStorage.getItem('token'))
   let tokenDecode: any;
   const [displayType, settype] = useState<"arrivals" | "departures" | "all">("all")
@@ -15,7 +17,6 @@ const DailyFlights = () => {
   const [today, settoday] = useState("")
   const [sorted, setsorted] = useState<Iflight[]>([...flights].sort((a, b) => +new Date(a.stdLocal) - +new Date(b.stdLocal)))
   const [moveDate, setmoveDate] = useState(false)
-  const loading = useAppSelector(selectFlightsPending)
   const [Clicked, setClicked] = useState(false)
   const [currentFlight, setcurrentFlight] = useState<Iflight>()
 
@@ -34,6 +35,16 @@ const DailyFlights = () => {
       })
     // eslint-disable-next-line
   }, [])
+
+  useEffect(() => {
+    dispatch(getFlightsAsync(accessToken))
+    .then(() => {
+      const tempFlights = [...flights]
+      setsorted(tempFlights.sort((a, b) => +new Date(a.stdLocal) - +new Date(b.stdLocal)))
+      dispatch(getFlightsAsync(accessToken))
+    })
+    // eslint-disable-next-line
+  }, [flightRefresh])
 
   useEffect(() => {
     settoday(myDate.toISOString().slice(0, 10))
@@ -180,7 +191,7 @@ const DailyFlights = () => {
                       <td>{f.stdLocal.slice(11, 16)}&nbsp;&nbsp; Z<br />{new Date(f.stdLocal).toTimeString().slice(0, 5)}&nbsp; LT</td>
                       <td>{f.dest}</td>
                       <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
-                      <td>{f.aircraftType === "TBA" ? "" : f.aircraftType}</td>
+                      <td>{f.aircraftReg === "TBA" ? "" : f.aircraftReg}</td>
                       <td>{users?.filter((u: any) => u.id === f.spv)[0]?.first_name} {users?.filter((u: any) => u.id === f.spv)[0]?.last_name}</td>
                       <td>{users?.filter((u: any) => u.id === f.clc)[0]?.first_name} {users?.filter((u: any) => u.id === f.clc)[0]?.last_name}</td>
                       <td>{f.ramp?.map((agent: number, i: number) =>

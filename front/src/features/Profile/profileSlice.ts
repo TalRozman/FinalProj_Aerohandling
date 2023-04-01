@@ -84,6 +84,9 @@ export const profileSlice = createSlice({
   reducers: {
     resetProfile: (state) => {
       state.profiles = [];
+    },
+    timeout:(state)=>{
+      state.status = false;
     }
   },
   extraReducers: (builder) => {
@@ -119,7 +122,7 @@ export const profileSlice = createSlice({
   }
 });
 
-export const { resetProfile } = profileSlice.actions;
+export const { resetProfile,timeout } = profileSlice.actions;
 export const selectProfile = (state: RootState) => state.profile.profiles;
 export const selectallProfile = (state: RootState) => state.profile.allProfiles;
 export const selectProfileRefresh = (state: RootState) => state.profile.refresh;

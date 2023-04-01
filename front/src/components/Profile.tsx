@@ -1,19 +1,15 @@
 import jwtDecode from 'jwt-decode'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import IProfile from '../models/profile'
 import { CheckLogged, selectlogged } from '../features/Login/loginSlice'
 import { addProfileAsync, delProfilePicAsync, getProfileAsync, ProfilePicAsync, selectProfile, selectProfileRefresh, updProfileAsync } from '../features/Profile/profileSlice'
-import { toast, ToastContainer } from 'react-toastify'
 import { modalStyle } from '../env'
 import { Modal, Box, Button } from '@mui/material'
 import { CloseOutlined } from '@mui/icons-material';
 
-
 const Profile = () => {
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
     const logged = useAppSelector(selectlogged)
     const accessToken = String(sessionStorage.getItem('token'))
     const [phoneNum, setphoneNum] = useState("")
@@ -76,7 +72,6 @@ const Profile = () => {
     
     return (
         <div style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '40%', textAlign: 'center' }}>
-            <ToastContainer />
             {profile.length ?
                 (!isUpdate ?
                     <div>

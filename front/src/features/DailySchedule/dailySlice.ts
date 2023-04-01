@@ -1,26 +1,26 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { Iflight } from '../../models/flight';
-import Iuser from '../../models/user';
-import { getAllFlights, getAllUsers, pullFlights } from './dailyAPI';
+import { timeout } from '../Profile/profileSlice';
+import { getAllFlights, getAllUsers, pullFlights, updateFlight } from './dailyAPI';
 
 export interface dailyState {
   flights: Iflight[]
-  refresh:boolean
+  refresh: boolean
   users: any[]
   loading: boolean
 }
 
 const initialState: dailyState = {
-  flights:[],
+  flights: [],
   refresh: false,
   users: [],
-  loading:true,
+  loading: true,
 };
 
 export const getFlightsAsync = createAsyncThunk(
   'daily/getAllFlights',
-  async (accessToken:string) => {
+  async (accessToken: string) => {
     const response = await getAllFlights(accessToken);
     return response;
   }
@@ -39,6 +39,13 @@ export const getAllUsersAsync = createAsyncThunk(
     return response;
   }
 );
+export const updateFlightAsync = createAsyncThunk(
+  'daily/updateFlight',
+  async (obj: { flight: any, accessToken: string }) => {
+    const response = await updateFlight(obj);
+    return response;
+  }
+);
 
 export const dailySlice = createSlice(
   {
@@ -52,11 +59,20 @@ export const dailySlice = createSlice(
           state.flights = action.payload
           state.loading = false
         })
+        .addCase(getFlightsAsync.rejected, (state) => {
+          timeout()
+        })
         .addCase(pullFlightsAsync.fulfilled, (state) => {
           state.refresh = !state.refresh
         })
-        .addCase(getAllUsersAsync.fulfilled, (state,action) => {
-          state.users = action.payload 
+        .addCase(getAllUsersAsync.fulfilled, (state, action) => {
+          state.users = action.payload
+        })
+        .addCase(getAllUsersAsync.rejected, (state) => {
+          timeout()
+        })
+        .addCase(updateFlightAsync.fulfilled, (state) => {
+          state.refresh = !state.refresh
         })
     },
   });

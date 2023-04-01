@@ -9,12 +9,12 @@ export interface Iflight{
     aircraftReg:string
     gate:string
     pit:string
-    agents?:string[]
-    ramp?:string[]
-    wingWalker?:string[]
+    agents?:number[]
+    ramp?:number[]
+    wingWalker?:number[]
     ambulift:boolean
     obTime:string
-    delaycode:number[]
+    delaycode:string[]
     delaytime:string[]
     arivalAgent:number
     clc:number

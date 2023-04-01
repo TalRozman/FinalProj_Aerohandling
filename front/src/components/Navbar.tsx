@@ -39,7 +39,7 @@ const Navbar = () => {
                                         <ul className="dropdown-menu">
                                             <Link className="dropdown-item" to={'manageProfiles'}><span data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Manage Profiles</span></Link>
                                             <Link className="dropdown-item" to={'/'} onClick={() => dispatch(setRegisterModalView())}><span data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Register new employee</span></Link>
-                                            <Link className="dropdown-item" to={'/'}><span data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">TBA</span></Link>
+                                            {/* <Link className="dropdown-item" to={'/'}><span data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">TBA</span></Link> */}
                                         </ul>
                                     </li>
                                 }

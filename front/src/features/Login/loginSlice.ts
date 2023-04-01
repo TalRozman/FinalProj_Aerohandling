@@ -88,6 +88,7 @@ export const loginSlice = createSlice(
           sessionStorage.setItem('token', action.payload?.access)
           sessionStorage.setItem('tmpToken', action.payload?.refresh)
           localStorage.setItem('refreshToken', action.payload?.refresh)
+          console.log("refresh token")
           state.accessToken = action.payload?.access
           state.refreshToken = action.payload?.refresh
           state.logged = true;
