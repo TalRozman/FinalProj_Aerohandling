@@ -1,4 +1,3 @@
-import "https://kit.fontawesome.com/4b9ba14b0f.js"
 import React from 'react'
 import { Link } from "react-router-dom"
 import '../404.css'

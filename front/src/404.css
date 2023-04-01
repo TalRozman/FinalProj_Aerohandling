@@ -1,4 +1,6 @@
-  .mainbox {
+@import "https://kit.fontawesome.com/4b9ba14b0f.js";
+
+.mainbox {
     background-color: #95c2de;
     margin: auto;
     text-align: center;
