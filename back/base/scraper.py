@@ -78,7 +78,7 @@ def getFlights():
 
     driver.quit()
 
-    aeroCompanies = ["UX","IB","AI","IZ","B2","WZ","QS","EY","5F","3F","J2","HY","CY","A9","ET","FB","VY"]
+    aeroCompanies = ["UX","IB","AI","IZ","B2","WZ","QS","EY","5F","3F","J2","HY","CY","A9","ET","FB","VY","FX","I2","XZ"]
     flights = {"flights":[]}
 
     counter = 0
