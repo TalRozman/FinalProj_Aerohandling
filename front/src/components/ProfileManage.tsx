@@ -10,9 +10,7 @@ const ProfileManage = () => {
   const refresh = useAppSelector(selectProfileRefresh)
   let myobj: { "id": number, "accessToken": string };
   let tokenDecode: any;
-
-  // const tableRows = document.querySelectorAll('tbody tr');
-  // const rowCellCounts = Array.from(tableRows).map(row => row.childElementCount);
+  const [showActive, setshowActive] = useState(false)
 
   const [displayType, settype] = useState<"all" | "operation" | "passenger service">("all")
 
@@ -31,12 +29,12 @@ const ProfileManage = () => {
     dispatch(delProfileAsync(myobj))
   }
 
-
   return (
     <div className="table-responsive">
       <button className='btn' onClick={() => settype('all')}>All Departments</button>
       <button className='btn' onClick={() => settype('operation')}>Operations</button>
-      <button className='btn' onClick={() => settype('passenger service')}>Passenger Service</button>
+      <button className='btn' onClick={() => settype('passenger service')}>Passenger Service</button><br />
+      Show only Active employees {" "}<input type="checkbox" onChange={() => setshowActive(!showActive)} defaultChecked={showActive} />
       <table className='table table-striped table-hover' style={{ verticalAlign: 'middle', textAlign: 'center' }}>
         <thead>
           <tr>
@@ -55,80 +53,170 @@ const ProfileManage = () => {
           </tr>
         </thead>
         <tbody>
-          {displayType === 'all' ?
-            profile?.Users.map((usr: any, i: number) =>
-              <tr key={i}>
-                {tokenDecode.user_id === usr.id ?
-                  <td><button className='btn btn-info' style={{ fontSize: '15px' }}>Cannot Disable yourself</button></td> :
-                  <td><button className='btn btn-danger' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Disable<br />Employee</button></td>
-                }
-                <td>{usr.first_name}</td>
-                <td>{usr.last_name}</td>
-                <td>{usr.email}</td>
-                <td>{usr.is_active ? "Active" : "In-active"}</td>
-                <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
-                <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
-                <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
-                {
-                  profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>
-                    <React.Fragment key={i}>
-                      <td>{mypro?.address}</td>
-                      <td>{mypro?.birthDate}</td>
-                      <td>{mypro?.phoneNum}</td>
-                      <td>{mypro?.needTaxi ? "Yes" : "No"}</td>
-                    </React.Fragment>)
-                }
-                {/* {rowCellCounts[i] < 12 && <td colSpan={4}>User did not fill profile info</td>} */}
-              </tr>) :
-            displayType === 'operation' ?
-              profile?.Users.filter((usr: any) => usr.department === 1).map((usr: any, i: number) =>
-                <tr key={i}>
-                  {tokenDecode.user_id === usr.id ?
-                    <td><button className='btn btn-info' style={{ fontSize: '15px' }}>Cannot Disable yourself</button></td> :
-                    <td><button className='btn btn-danger' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Disable<br />Employee</button></td>
-                  }
-                  <td>{usr.first_name}</td>
-                  <td>{usr.last_name}</td>
-                  <td>{usr.email}</td>
-                  <td>{usr.is_active ? "Active" : "In-active"}</td>
-                  <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
-                  <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
-                  <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
-                  {
-                    profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>
-                      <React.Fragment key={i}>
-                        <td>{mypro?.address}</td>
-                        <td>{mypro?.birthDate}</td>
-                        <td>{mypro?.phoneNum}</td>
-                        <td>{mypro?.needTaxi ? "Yes" : "No"}</td>
-                      </React.Fragment>)
-                  }
-                  {/* {rowCellCounts[i] < 12 && <td colSpan={4}>User did not fill profile info</td>} */}
-                </tr>) :
-              profile?.Users.filter((usr: any) => usr.department === 2).map((usr: any, i: number) =>
-                <tr key={i}>
-                  {tokenDecode.user_id === usr.id ?
-                    <td><button className='btn btn-info' style={{ fontSize: '15px' }}>Cannot Disable yourself</button></td> :
-                    <td><button className='btn btn-danger' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Disable<br />Employee</button></td>
-                  }
-                  <td>{usr.first_name}</td>
-                  <td>{usr.last_name}</td>
-                  <td>{usr.email}</td>
-                  <td>{usr.is_active ? "Active" : "In-active"}</td>
-                  <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
-                  <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
-                  <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
-                  {
-                    profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>
-                      <React.Fragment key={i}>
-                        <td>{mypro?.address}</td>
-                        <td>{mypro?.birthDate}</td>
-                        <td>{mypro?.phoneNum}</td>
-                        <td>{mypro?.needTaxi ? "Yes" : "No"}</td>
-                      </React.Fragment>)
-                  }
-                  {/* {rowCellCounts[i] < 12 && <td colSpan={4}>User did not fill profile info</td>} */}
-                </tr>)}
+          {showActive ?
+            <>
+              {displayType === 'all' ?
+                profile?.Users.filter((usr: any) => usr.is_active).map((usr: any, i: number) =>
+                  <tr key={i}>
+                    <td>
+                      {tokenDecode.user_id === usr.id ? <button className='btn btn-info' style={{ fontSize: '15px' }}>Cannot Disable yourself</button> :
+                        (usr.is_active ?
+                          <button className='btn btn-danger' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Disable<br />Employee</button>
+                          :
+                          <button className='btn btn-warning' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Enable<br />Employee</button>)}
+                    </td>
+                    <td>{usr.first_name}</td>
+                    <td>{usr.last_name}</td>
+                    <td>{usr.email}</td>
+                    <td>{usr.is_active ? "Active" : "In-active"}</td>
+                    <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
+                    <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
+                    <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
+                    {
+                      profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>
+                        <React.Fragment key={i}>
+                          <td>{mypro?.address}</td>
+                          <td>{mypro?.birthDate}</td>
+                          <td>{mypro?.phoneNum}</td>
+                          <td>{mypro?.needTaxi ? "Yes" : "No"}</td>
+                        </React.Fragment>)
+                    }
+                  </tr>) :
+                displayType === 'operation' ?
+                  profile?.Users.filter((usr: any) => usr.is_active).filter((usr: any) => usr.department === 1).map((usr: any, i: number) =>
+                    <tr key={i}>
+                      <td>
+                        {tokenDecode.user_id === usr.id ? <button className='btn btn-info' style={{ fontSize: '15px' }}>Cannot Disable yourself</button> :
+                          (usr.is_active ?
+                            <button className='btn btn-danger' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Disable<br />Employee</button>
+                            :
+                            <button className='btn btn-warning' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Enable<br />Employee</button>)}
+                      </td>
+                      <td>{usr.first_name}</td>
+                      <td>{usr.last_name}</td>
+                      <td>{usr.email}</td>
+                      <td>{usr.is_active ? "Active" : "In-active"}</td>
+                      <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
+                      <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
+                      <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
+                      {
+                        profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>
+                          <React.Fragment key={i}>
+                            <td>{mypro?.address}</td>
+                            <td>{mypro?.birthDate}</td>
+                            <td>{mypro?.phoneNum}</td>
+                            <td>{mypro?.needTaxi ? "Yes" : "No"}</td>
+                          </React.Fragment>)
+                      }
+                    </tr>) :
+                  profile?.Users.filter((usr: any) => usr.is_active).filter((usr: any) => usr.department === 2).map((usr: any, i: number) =>
+                    <tr key={i}>
+                      <td>
+                        {tokenDecode.user_id === usr.id ? <button className='btn btn-info' style={{ fontSize: '15px' }}>Cannot Disable yourself</button> :
+                          (usr.is_active ?
+                            <button className='btn btn-danger' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Disable<br />Employee</button>
+                            :
+                            <button className='btn btn-warning' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Enable<br />Employee</button>)}
+                      </td>
+                      <td>{usr.first_name}</td>
+                      <td>{usr.last_name}</td>
+                      <td>{usr.email}</td>
+                      <td>{usr.is_active ? "Active" : "In-active"}</td>
+                      <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
+                      <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
+                      <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
+                      {
+                        profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>
+                          <React.Fragment key={i}>
+                            <td>{mypro?.address}</td>
+                            <td>{mypro?.birthDate}</td>
+                            <td>{mypro?.phoneNum}</td>
+                            <td>{mypro?.needTaxi ? "Yes" : "No"}</td>
+                          </React.Fragment>)}
+                    </tr>)}
+            </> :
+            <>
+              {displayType === 'all' ?
+                profile?.Users.map((usr: any, i: number) =>
+                  <tr key={i}>
+                    <td>
+                      {tokenDecode.user_id === usr.id ? <button className='btn btn-info' style={{ fontSize: '15px' }}>Cannot Disable yourself</button> :
+                        (usr.is_active ?
+                          <button className='btn btn-danger' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Disable<br />Employee</button>
+                          :
+                          <button className='btn btn-warning' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Enable<br />Employee</button>)}
+                    </td>
+                    <td>{usr.first_name}</td>
+                    <td>{usr.last_name}</td>
+                    <td>{usr.email}</td>
+                    <td>{usr.is_active ? "Active" : "In-active"}</td>
+                    <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
+                    <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
+                    <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
+                    {
+                      profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>
+                        <React.Fragment key={i}>
+                          <td>{mypro?.address}</td>
+                          <td>{mypro?.birthDate}</td>
+                          <td>{mypro?.phoneNum}</td>
+                          <td>{mypro?.needTaxi ? "Yes" : "No"}</td>
+                        </React.Fragment>)
+                    }
+                  </tr>) :
+                displayType === 'operation' ?
+                  profile?.Users.filter((usr: any) => usr.department === 1).map((usr: any, i: number) =>
+                    <tr key={i}>
+                      <td>
+                        {tokenDecode.user_id === usr.id ? <button className='btn btn-info' style={{ fontSize: '15px' }}>Cannot Disable yourself</button> :
+                          (usr.is_active ?
+                            <button className='btn btn-danger' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Disable<br />Employee</button>
+                            :
+                            <button className='btn btn-warning' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Enable<br />Employee</button>)}
+                      </td>
+                      <td>{usr.first_name}</td>
+                      <td>{usr.last_name}</td>
+                      <td>{usr.email}</td>
+                      <td>{usr.is_active ? "Active" : "In-active"}</td>
+                      <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
+                      <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
+                      <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
+                      {
+                        profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>
+                          <React.Fragment key={i}>
+                            <td>{mypro?.address}</td>
+                            <td>{mypro?.birthDate}</td>
+                            <td>{mypro?.phoneNum}</td>
+                            <td>{mypro?.needTaxi ? "Yes" : "No"}</td>
+                          </React.Fragment>)
+                      }
+                    </tr>) :
+                  profile?.Users.filter((usr: any) => usr.department === 2).map((usr: any, i: number) =>
+                    <tr key={i}>
+                      <td>
+                        {tokenDecode.user_id === usr.id ? <button className='btn btn-info' style={{ fontSize: '15px' }}>Cannot Disable yourself</button> :
+                          (usr.is_active ?
+                            <button className='btn btn-danger' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Disable<br />Employee</button>
+                            :
+                            <button className='btn btn-warning' style={{ fontSize: '15px' }} onClick={() => handleDelete(usr.id)}>Enable<br />Employee</button>)}
+                      </td>
+                      <td>{usr.first_name}</td>
+                      <td>{usr.last_name}</td>
+                      <td>{usr.email}</td>
+                      <td>{usr.is_active ? "Active" : "In-active"}</td>
+                      <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
+                      <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
+                      <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
+                      {
+                        profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>
+                          <React.Fragment key={i}>
+                            <td>{mypro?.address}</td>
+                            <td>{mypro?.birthDate}</td>
+                            <td>{mypro?.phoneNum}</td>
+                            <td>{mypro?.needTaxi ? "Yes" : "No"}</td>
+                          </React.Fragment>)
+                      }
+                    </tr>)}
+            </>}
         </tbody>
       </table>
     </div >
