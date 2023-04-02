@@ -21,8 +21,8 @@ def getFlights():
     options = webdriver.ChromeOptions()
     options.add_argument('--ignore-ssl-errors=yes')
     options.add_argument('--ignore-certificate-errors')
-    # driver = webdriver.Remote(command_executor='https://test-rqsy.onrender.com/wd/hub',options=options,desired_capabilities=DesiredCapabilities.CHROME)
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Remote(command_executor='https://test-3p3b.onrender.com/wd/hub',options=options,desired_capabilities=DesiredCapabilities.CHROME)
+    # driver = webdriver.Chrome(options=options)
     # driver.minimize_window()
     # Open Airportia Arivals website
     driver.get(airportiaUrlArvl)
