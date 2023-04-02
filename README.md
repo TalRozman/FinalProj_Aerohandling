@@ -1,21 +1,16 @@
+<div align="center">
 <a name="readme-top">
-<img src ="./front/public/aero.png" alt="logo" style="
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 25%;">
+<img src ="./front/public/aero.png" alt="logo" style="display: block; margin-left: auto; margin-right: auto; width: 25%;">
     </a>
 <br/>
 <h1 align='center'>Aerohandling</h1>
 
-<div align='center'>
-
 <a href='https://aerohandling.netlify.app/'>
 <img src='https://img.shields.io/badge/HOMEPAGE-gray?style=for-the-badge'>
 </a>
-
+</div>
 <br />
-
+<div align="center">
 # Aerohandling
 > Aerohandling is a small, botique handling company located in TLV Airport, Israel.
 > The company requested to create a system to manage employees' daily schedule and tasks.
@@ -85,22 +80,22 @@ Back-End -
 New employee added to the system gets an email with welcome message.<br/>
 <img src="./readmeImages/email.jpg" width="35%"><br/>
 in addition the mail will contain a link to the system website and temporary password.<br/>
-After Login, The employee will be requested to change the password and re-login.
-<img src="./readmeImages/resetPwd.jpg" width="35%">
+After Login, The employee will be requested to change the password and re-login.<br/>
+<img src="./readmeImages/resetPwd.jpg" width="35%"><br/>
 ### Available functions - 
 - My Profile
     - At first the employee will be required to fill out short form with address, phone number, birth date and transportation way.<br/>
-    <img src="./readmeImages/profileForm.jpg" width="35%">
+    <img src="./readmeImages/profileForm.jpg" width="35%"><br/>
     - After this information is filled in, the employee will be able to see his department, role, and temporary profile picture.<br/>
     Uploading a new profile image is optional.<br/>
-    <img src="./readmeImages/filledProfile.jpg" width="35%">
+    <img src="./readmeImages/filledProfile.jpg" width="35%"><br/>
 - Daily schedule
     - List of all flights per day sorted by schedule departure time.<br/>
-    <img src="./readmeImages/dailyFlights.jpg" width="50%">
+    <img src="./readmeImages/dailyFlights.jpg" width="50%"><br/>
     - Filtering options are available for arrivals and departures.<br/>
-    <img src="./readmeImages/filterAndDatePicker.jpg" width="50%">
-    - Click on a flight will open detailed information of the flight.
-    <img src="./readmeImages/singleFlightModal.jpg" width="50%"><br>
+    <img src="./readmeImages/filterAndDatePicker.jpg" width="50%"><br/>
+    - Click on a flight will open detailed information of the flight.<br/>
+    <img src="./readmeImages/singleFlightModal.jpg" width="50%"><br/>
     - The employee can only view the data.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -110,17 +105,17 @@ The Shift supervisor is allowed to edit the data in the Daily flight screen
 <table>
     <tr>
         <td colspan=2>
-            Open detailed information of flight, shift supervisor user.
+            Open detailed information of flight, shift supervisor user. <br/>
             <img src="./readmeImages/singleFlightModal-ShiftSpv.jpg" width="300px">
         </td>
     </tr>
     <tr>
         <td>
-            Update Arrival flight information
+            Update Arrival flight information <br/>
             <img src="./readmeImages/updateArvl.jpg" width="300px">
         </td>
         <td>
-            Update Departure flight information
+            Update Departure flight information <br/>
             <img src="./readmeImages/updateDpt.jpg" width="300px">
         </td>
     </tr>
