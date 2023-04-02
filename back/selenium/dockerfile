@@ -1,4 +1,4 @@
-FROM docker pull selenium/standalone-chrome-debug
+FROM selenium/standalone-chrome-debug
 USER root
 
 WORKDIR /sel
