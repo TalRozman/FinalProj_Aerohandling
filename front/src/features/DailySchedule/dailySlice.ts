@@ -8,14 +8,12 @@ export interface dailyState {
   flights: Iflight[]
   refresh: boolean
   users: any[]
-  loading: boolean
 }
 
 const initialState: dailyState = {
   flights: [],
   refresh: false,
   users: [],
-  loading: true,
 };
 
 export const getFlightsAsync = createAsyncThunk(
@@ -57,7 +55,6 @@ export const dailySlice = createSlice(
       builder
         .addCase(getFlightsAsync.fulfilled, (state, action) => {
           state.flights = action.payload
-          state.loading = false
         })
         .addCase(getFlightsAsync.rejected, (state) => {
           timeout()
@@ -82,7 +79,5 @@ export const dailySlice = createSlice(
 export const selectFlights = (state: RootState) => state.daily.flights;
 export const selectFlightsRefresh = (state: RootState) => state.daily.refresh;
 export const selectAllUsers = (state: RootState) => state.daily.users;
-export const selectFlightsPending = (state: RootState) => state.daily.loading;
-
 
 export default dailySlice.reducer;

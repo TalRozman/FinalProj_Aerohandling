@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
-import { getFlightsAsync, pullFlightsAsync, selectAllUsers, selectFlights, selectFlightsPending, selectFlightsRefresh } from '../features/DailySchedule/dailySlice'
+import { getFlightsAsync, pullFlightsAsync, selectAllUsers, selectFlights, selectFlightsRefresh } from '../features/DailySchedule/dailySlice'
 import { Iflight } from '../models/flight'
 import SingleFlight from './SingleFlight'
 import Timer from './Timer'
@@ -9,7 +9,7 @@ import Timer from './Timer'
 const DailyFlights = () => {
   const dispatch = useAppDispatch()
   const flights = useAppSelector(selectFlights)
-  const loading = useAppSelector(selectFlightsPending)
+  const [loading, setloading] = useState(true)
   const flightRefresh = useAppSelector(selectFlightsRefresh)
   const accessToken = String(sessionStorage.getItem('token'))
   let tokenDecode: any;
@@ -32,18 +32,16 @@ const DailyFlights = () => {
       .then(() => {
         const tempFlights = [...flights]
         setsorted(tempFlights.sort((a, b) => +new Date(a.stdLocal) - +new Date(b.stdLocal)))
-        dispatch(getFlightsAsync(accessToken))
-      })
+      }).then(()=>setloading(false))
     // eslint-disable-next-line
-  }, [])
+  },[])
 
   useEffect(() => {
     dispatch(getFlightsAsync(accessToken))
       .then(() => {
         const tempFlights = [...flights]
         setsorted(tempFlights.sort((a, b) => +new Date(a.stdLocal) - +new Date(b.stdLocal)))
-        dispatch(getFlightsAsync(accessToken))
-      })
+      }).then(()=>setloading(false))
     // eslint-disable-next-line
   }, [flightRefresh])
 
@@ -111,7 +109,7 @@ const DailyFlights = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {sorted.filter((f: any) => f.stdLocal.slice(0, 10) === today).map((f: any, i: number) =>
+                  {sorted?.filter((f: any) => f.stdLocal.slice(0, 10) === today)?.map((f: any, i: number) =>
                     <tr key={i} onClick={() => handleSelectFlight(f)}>
                       <td>{f.type}</td>
                       <td>{f.flightNum}</td>

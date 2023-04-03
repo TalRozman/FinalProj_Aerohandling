@@ -10,7 +10,6 @@ import DailyFlights from './components/DailyFlights';
 import ProfileManage from './components/ProfileManage';
 import E404 from './components/404';
 import Landing from './components/Landing';
-import SingleFlight from './components/SingleFlight';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -26,7 +25,6 @@ root.render(
           <Route path='manageProfiles' element={<ProfileManage />} />
           <Route path='flights'>
             <Route index element={<DailyFlights />}/>
-            <Route path=':flightId' element={<SingleFlight />} />
           </Route>
         </Route>
         <Route path='*' element={<E404 />} />

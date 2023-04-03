@@ -9,12 +9,14 @@ export interface profileState {
   profiles: IProfile[]
   allProfiles?: any
   refresh: boolean
-  status?: Boolean
+  status?: boolean
+  loaded:boolean
 }
 
 const initialState: profileState = {
   profiles: [],
-  refresh: false
+  refresh: false,
+  loaded:false
 };
 
 export const getProfileAsync = createAsyncThunk(
@@ -93,6 +95,7 @@ export const profileSlice = createSlice({
     builder
       .addCase(getProfileAsync.fulfilled, (state, action) => {
         state.profiles = [action.payload]
+        state.loaded = true
       })
       .addCase(updProfileAsync.fulfilled, (state) => {
         state.refresh = !state.refresh
@@ -118,6 +121,7 @@ export const profileSlice = createSlice({
       })
       .addCase(getProfileAsync.rejected, (state) => {
         state.status = false
+        state.loaded = true
       })
   }
 });
@@ -127,5 +131,6 @@ export const selectProfile = (state: RootState) => state.profile.profiles;
 export const selectallProfile = (state: RootState) => state.profile.allProfiles;
 export const selectProfileRefresh = (state: RootState) => state.profile.refresh;
 export const selectReqStatus = (state: RootState) => state.profile.status;
+export const selectLoaded = (state: RootState) => state.profile.loaded;
 
 export default profileSlice.reducer;

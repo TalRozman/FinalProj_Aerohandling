@@ -23,7 +23,7 @@ const Timer = (props: any) => {
 
     return (
         <div className="timer">
-            {hours > 0 && "in"} {hours === 0 ? "" : hours > 0 ? hours + " hours and" : -hours + " hours and"} {minutes > 0 ? minutes : -minutes} minutes<br />{hours < 0 && "passed"}
+            {(hours > 0 || hours === 0 ) && "in"} {hours === 0 ? "" : hours > 0 ? hours + " hours and" : -hours + " hours and"} {minutes > 0 ? minutes : -minutes} minutes<br />{hours < 0 && "ago"}
         </div>
     );
 };
