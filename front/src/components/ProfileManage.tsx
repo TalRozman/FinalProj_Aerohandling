@@ -70,7 +70,7 @@ const ProfileManage = () => {
                     <td>{usr.email}</td>
                     <td>{usr.is_active ? "Active" : "In-active"}</td>
                     <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
-                    <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
+                    <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : usr.role === 6 ? "CLC" : usr.role === 7 ? "Pushback Driver" : usr.role === 8 ? "Sorter" : usr.role === 9 && "MAAS Agent"}</td>
                     <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
                     {
                       profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>
@@ -97,7 +97,7 @@ const ProfileManage = () => {
                       <td>{usr.email}</td>
                       <td>{usr.is_active ? "Active" : "In-active"}</td>
                       <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
-                      <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
+                      <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : usr.role === 6 ? "CLC" : usr.role === 7 ? "Pushback Driver" : usr.role === 8 ? "Sorter" : usr.role === 9 && "MAAS Agent"}</td>
                       <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
                       {
                         profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>
@@ -151,7 +151,7 @@ const ProfileManage = () => {
                     <td>{usr.email}</td>
                     <td>{usr.is_active ? "Active" : "In-active"}</td>
                     <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
-                    <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
+                    <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : usr.role === 6 ? "CLC" : usr.role === 7 ? "Pushback Driver" : usr.role === 8 ? "Sorter" : usr.role === 9 && "MAAS Agent"}</td>
                     <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
                     {
                       profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>
@@ -178,7 +178,7 @@ const ProfileManage = () => {
                       <td>{usr.email}</td>
                       <td>{usr.is_active ? "Active" : "In-active"}</td>
                       <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
-                      <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
+                      <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : usr.role === 6 ? "CLC" : usr.role === 7 ? "Pushback Driver" : usr.role === 8 ? "Sorter" : usr.role === 9 && "MAAS Agent"}</td>
                       <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
                       {
                         profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>
@@ -204,7 +204,7 @@ const ProfileManage = () => {
                       <td>{usr.email}</td>
                       <td>{usr.is_active ? "Active" : "In-active"}</td>
                       <td>{usr.department === 1 ? "Operations" : "Passenger Service"}</td>
-                      <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : "CLC"}</td>
+                      <td>{usr.role === 1 ? "SPV" : usr.role === 2 ? "Check in agent" : usr.role === 3 ? "PS" : usr.role === 4 ? "Ramp agent" : usr.role === 5 ? "OPS" : usr.role === 6 ? "CLC" : usr.role === 7 ? "Pushback Driver" : usr.role === 8 ? "Sorter" : usr.role === 9 && "MAAS Agent"}</td>
                       <td>{usr.type === 1 ? "Manager" : usr.type === 2 ? "Shift supervisor" : "Employee"}</td>
                       {
                         profile.Profiles.filter((pro: any) => pro.user === usr.id).map((mypro: any, i: number) =>

@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { getFlightsAsync, pullFlightsAsync, selectAllUsers, selectFlights, selectFlightsPending, selectFlightsRefresh } from '../features/DailySchedule/dailySlice'
 import { Iflight } from '../models/flight'
 import SingleFlight from './SingleFlight'
+import Timer from './Timer'
 
 const DailyFlights = () => {
   const dispatch = useAppDispatch()
@@ -38,11 +39,11 @@ const DailyFlights = () => {
 
   useEffect(() => {
     dispatch(getFlightsAsync(accessToken))
-    .then(() => {
-      const tempFlights = [...flights]
-      setsorted(tempFlights.sort((a, b) => +new Date(a.stdLocal) - +new Date(b.stdLocal)))
-      dispatch(getFlightsAsync(accessToken))
-    })
+      .then(() => {
+        const tempFlights = [...flights]
+        setsorted(tempFlights.sort((a, b) => +new Date(a.stdLocal) - +new Date(b.stdLocal)))
+        dispatch(getFlightsAsync(accessToken))
+      })
     // eslint-disable-next-line
   }, [flightRefresh])
 
@@ -127,7 +128,9 @@ const DailyFlights = () => {
                       <td>{f.gate === "TBA" ? "" : f.gate}</td>
                       <td>{f.stand}</td>
                       <td>{f.obTime}</td>
-                      <td>{f.delaycode}<br />{f.delaytime}</td>
+                      <td>{f.obTime ? <>{f.delaycode}<br />{f.delaytime}</> :
+                        today === new Date().toISOString().slice(0, 10) &&
+                        <Timer deadline={f.stdLocal} />}</td>
                     </tr>)}
                 </tbody>
               </table>}

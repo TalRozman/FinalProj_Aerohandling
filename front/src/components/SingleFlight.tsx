@@ -135,18 +135,18 @@ const SingleFlight = (props: any) => {
                                             {/* SHOW ONLY ID MANAGER OR OPS - UPDATE ONLY OPERATIONS INFO */}
                                             {props.currentFlight?.type === "D" ?
                                                 <>
-                                                    {/* // DEPARTURES */}
+                                                    {/* DEPARTURES */}
                                                     <tr>
                                                         <td>
                                                             <label>
                                                                 Aircragt Registration -<br />
-                                                                <input onChange={(e) => setacReg(e.currentTarget.value)} />
+                                                                <input onChange={(e) => setacReg(e.currentTarget.value)} defaultValue={props.currentFlight?.aircraftReg === "TBA" ? "" : props.currentFlight?.aircraftReg}/>
                                                             </label>
                                                         </td>
                                                         <td>
                                                             <label>
                                                                 Aircragt Type -<br />
-                                                                <input onChange={(e) => setacType(e.currentTarget.value)} />
+                                                                <input onChange={(e) => setacType(e.currentTarget.value)} defaultValue={props.currentFlight?.aircraftType === "TBA" ? "" : props.currentFlight?.aircraftType}/>
                                                             </label>
                                                         </td>
                                                     </tr>
@@ -154,7 +154,7 @@ const SingleFlight = (props: any) => {
                                                         <td>
                                                             <label>
                                                                 Pit -<br />
-                                                                <select onChange={(e) => setpit(e.currentTarget.value)}>
+                                                                <select onChange={(e) => setpit(e.currentTarget.value)} defaultValue={props.currentFlight?.pit}>
                                                                     <option value="" selected disabled>Please select Pit</option>
                                                                     {pits.map((pit: string, i: number) =>
                                                                         <option key={i}>{pit}</option>)}
@@ -172,7 +172,6 @@ const SingleFlight = (props: any) => {
                                                                                 <option key={i}>{gate}</option>)}
                                                                         </>}
                                                                 </select>
-
                                                             </label>
                                                         </td>
                                                     </tr>
@@ -234,7 +233,7 @@ const SingleFlight = (props: any) => {
                                                         <td>
                                                             <label>
                                                                 OB Time -<br />
-                                                                <input type={'datetime-local'} onChange={(e) => { const tmpTime = new Date(new Date(e.currentTarget.value).toISOString()); setobTime(tmpTime); console.log(obTime) }} />
+                                                                <input type={'datetime-local'} onChange={(e) => { const tmpTime = new Date(new Date(e.currentTarget.value).toISOString()); setobTime(tmpTime)}} defaultValue={props.currentFlight?.obTime}/>
                                                             </label>
                                                         </td>
                                                     </tr>
@@ -242,7 +241,7 @@ const SingleFlight = (props: any) => {
                                                         <td>
                                                             <label>
                                                                 ETD -<br />
-                                                                <input type={'datetime-local'} onChange={(e) => { const tmpTime = new Date(new Date(e.currentTarget.value).toISOString()); setETD(tmpTime) }} />
+                                                                <input type={'datetime-local'} onChange={(e) => { const tmpTime = new Date(new Date(e.currentTarget.value).toISOString()); setETD(tmpTime) }} defaultValue={props.currentFlight?.etdLocal}/>
                                                             </label>
                                                         </td>
                                                     </tr>
@@ -253,13 +252,13 @@ const SingleFlight = (props: any) => {
                                                         <td>
                                                             <label>
                                                                 Aircragt Registration -<br />
-                                                                <input onChange={(e) => setacReg(e.currentTarget.value)} defaultValue={props.currentFlight?.acReg} />
+                                                                <input onChange={(e) => setacReg(e.currentTarget.value)} defaultValue={props.currentFlight?.aircraftReg === "TBA" ? "" : props.currentFlight?.aircraftReg} />
                                                             </label>
                                                         </td>
                                                         <td>
                                                             <label>
                                                                 Aircragt Type -<br />
-                                                                <input onChange={(e) => setacType(e.currentTarget.value)} defaultValue={props.currentFlight?.acType} />
+                                                                <input onChange={(e) => setacType(e.currentTarget.value)} defaultValue={props.currentFlight?.aircraftType === "TBA" ? "" : props.currentFlight?.aircraftType} />
                                                             </label>
                                                         </td>
                                                     </tr>
