@@ -11,9 +11,11 @@
 </div>
 <br />
 <div align="center">
+
 # Aerohandling
 > Aerohandling is a small, botique handling company located in TLV Airport, Israel.
 > The company requested to create a system to manage employees' daily schedule and tasks.
+
 </div>
 
 # 🧐 Project philosophy
