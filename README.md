@@ -13,7 +13,7 @@
 <div align="center">
 
 # Aerohandling
-> Aerohandling is a small, botique handling company located in TLV Airport, Israel.
+> Aerohandling is a small, boutique handling company located in TLV Airport, Israel.
 > The company requested to create a system to manage employees' daily schedule and tasks.
 
 </div>
@@ -21,10 +21,10 @@
 # 🧐 Project philosophy
 
 > This project is part of FS python cource. <br/>
-> The porpuse of the project is to create a better, easier  and more user friendly 
+> The purpose of the project is to create a better, easier and more user friendly 
 > daily management system.
 
->The system is pulling the flights schedule from the web every specified time.
+> The system is pulling the flights schedule from the web every specified time.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 # 👨‍💻 Tech stack
